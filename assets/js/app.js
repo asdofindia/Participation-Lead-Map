@@ -25,7 +25,7 @@ function add_leaders() {
             return response.json();
           }).
           then(function (json) {
-            json = json.leaders;
+            json = shuffle(json.leaders);
             console.log(json.length + ' Leaders loaded');
             document.querySelector('.counter').innerHTML = json.length + ' ';
             for (var i = 0; i < json.length; ++i) {
@@ -57,4 +57,24 @@ function get_gravatar_image_url(email, size, default_image, allowed_rating, forc
   force_default = force_default === true ? 'y' : 'n';
 
   return ("https://secure.gravatar.com/avatar/" + md5(email.toLowerCase().trim()) + "?size=" + size + "&default=" + encodeURIComponent(default_image) + "&rating=" + allowed_rating + (force_default === 'y' ? "&forcedefault=" + force_default : ''));
+}
+
+// from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }
